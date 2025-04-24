@@ -1,0 +1,20 @@
+{
+    "matakuliah": [
+      {
+        "kode": "IF3170",
+        "nama": "Intelegensi Buatan"
+      },
+      {
+        "kode": "IF3110",
+        "nama": "Pengembangan Aplikasi Berbasis Web"
+      },
+      {
+        "kode": "IF3130",
+        "nama": "Jaringan Komputer"
+      },
+      {
+        "kode": "IF3140",
+        "nama": "Manajemen Basis Data"
+      }
+    ]
+  }

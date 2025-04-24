@@ -1,0 +1,17 @@
+{
+    "nim": "2211104066",
+    "firstname": "Afif",
+    "lastname": "Ramadhani",
+    "age": 20,
+    "gender": "Male",
+    "address": {
+      "street": "Bancar",
+      "city": "Bandung",
+      "zipcode": "40132"
+    },
+    "courses": [
+      "Kecerdasan Buatan",
+      "Konstruksi Perangkat Lunak",
+      "Web Programming"
+    ]
+  }

@@ -1,0 +1,22 @@
+{
+    "glossary": {
+      "title": "Contoh Glosarium",
+      "glossDiv": {
+        "title": "P",
+        "glossList": {
+          "glossEntry": {
+            "ID": "PHP",
+            "SortAs": "PHP",
+            "GlossTerm": "PHP: Hypertext Preprocessor",
+            "Acronym": "PHP",
+            "Abbrev": "PHP 8.1",
+            "GlossDef": {
+              "Para": "Bahasa pemrograman skrip open-source yang banyak digunakan untuk pengembangan web dan dapat disematkan ke dalam HTML.",
+              "GlossSeeAlso": ["HTML", "JavaScript", "MySQL"]
+            },
+            "GlossSee": "bahasa pemrograman"
+          }
+        }
+      }
+    }
+  }

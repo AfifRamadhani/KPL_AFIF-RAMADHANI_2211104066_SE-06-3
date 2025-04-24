@@ -1,0 +1,25 @@
+{
+    "teamMemberList": [
+      {
+        "nim": "2211104066",
+        "firstname": "Afif",
+        "lastname": "Ramadhani",
+        "age": 20,
+        "gender": "Male"
+      },
+      {
+        "nim": "2211104065",
+        "firstname": "Muhammad Rizaldy",
+        "lastname": "Akbar",
+        "age": 21,
+        "gender": "Male"
+      },
+      {
+        "nim": "2211104063",
+        "firstname": "Dzikri",
+        "lastname": "Naufal",
+        "age": 19,
+        "gender": "Male"
+      }
+    ]
+  }

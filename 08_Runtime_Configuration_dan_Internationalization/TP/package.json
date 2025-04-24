@@ -1,0 +1,11 @@
+{
+    "name": "modul8_2211104066",
+    "version": "1.0.0",
+    "description": "COVID Screening Application with Runtime Configuration",
+    "main": "index.js",
+    "scripts": {
+      "start": "node index.js"
+    },
+    "author": "[Afif Ramadhani]",
+    "license": "ISC"
+  }
