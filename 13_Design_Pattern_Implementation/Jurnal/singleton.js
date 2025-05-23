@@ -1,0 +1,183 @@
+/**
+ * JURNAL MODUL 13 - DESIGN PATTERN SINGLETON
+ * Implementasi Design Pattern Singleton menggunakan JavaScript (Node.js)
+ * 
+ * Nama File: modul13_[NIM_ANDA].js
+ * Cara Menjalankan: node modul13_[NIM_ANDA].js
+ */
+
+console.log("=".repeat(60));
+console.log("🚀 JURNAL MODUL 13 - DESIGN PATTERN SINGLETON");
+console.log("=".repeat(60));
+
+/**
+ * Class PusatDataSingleton
+ * Implementasi Design Pattern Singleton untuk mengelola data terpusat
+ */
+class PusatDataSingleton {
+    /**
+     * Constructor - Inisialisasi DataTersimpan dengan array kosong
+     * Mencegah pembuatan instance ganda
+     */
+    constructor() {
+        // Cek apakah instance sudah ada
+        if (PusatDataSingleton._instance) {
+            throw new Error("❌ Instance sudah ada! Gunakan GetDataSingleton() untuk mengakses instance.");
+        }
+        
+        // Inisialisasi DataTersimpan dengan list kosong
+        this.DataTersimpan = [];
+        console.log("🎯 Konstruktor PusatDataSingleton dipanggil - DataTersimpan diinisialisasi");
+    }
+    
+    /**
+     * Static property untuk menyimpan instance tunggal
+     */
+    static _instance = null;
+    
+    /**
+     * GetDataSingleton() - Method static untuk mendapatkan instance singleton
+     * Implementasi lazy initialization
+     * @returns {PusatDataSingleton} Instance tunggal dari class
+     */
+    static GetDataSingleton() {
+        if (this._instance === null) {
+            console.log("🔄 Membuat instance baru PusatDataSingleton...");
+            this._instance = new PusatDataSingleton();
+        } else {
+            console.log("♻️  Menggunakan instance PusatDataSingleton yang sudah ada");
+        }
+        return this._instance;
+    }
+    
+    /**
+     * GetSemuaData() - Mengembalikan list dari property DataTersimpan
+     * @returns {Array<string>} Array berisi semua data yang tersimpan
+     */
+    GetSemuaData() {
+        console.log("📋 Mengambil semua data dari singleton...");
+        return this.DataTersimpan;
+    }
+    
+    /**
+     * PrintSemuaData() - Print satu per satu string yang ada di list DataTersimpan
+     */
+    PrintSemuaData() {
+        console.log("\n📄 === DAFTAR SEMUA DATA ===");
+        if (this.DataTersimpan.length === 0) {
+            console.log("📭 Data masih kosong");
+        } else {
+            this.DataTersimpan.forEach((data, index) => {
+                console.log(`   ${index + 1}. ${data}`);
+            });
+        }
+        console.log("============================\n");
+    }
+    
+    /**
+     * AddSebuahData() - Menambahkan satu data baru ke dalam list DataTersimpan
+     * @param {string} input - Data string yang akan ditambahkan
+     */
+    AddSebuahData(input) {
+        this.DataTersimpan.push(input);
+        console.log(`✅ Data "${input}" berhasil ditambahkan`);
+    }
+    
+    /**
+     * HapusSebuahData() - Menghapus sebuah data berdasarkan index tertentu
+     * @param {number} index - Index data yang akan dihapus
+     */
+    HapusSebuahData(index) {
+        if (index >= 0 && index < this.DataTersimpan.length) {
+            const dataHapus = this.DataTersimpan[index];
+            this.DataTersimpan.splice(index, 1);
+            console.log(`🗑️  Data "${dataHapus}" berhasil dihapus dari index ${index}`);
+        } else {
+            console.log(`❌ Index ${index} tidak valid! Range valid: 0-${this.DataTersimpan.length - 1}`);
+        }
+    }
+}
+
+/**
+ * PROGRAM UTAMA (MAIN)
+ * Implementasi sesuai instruksi tugas
+ */
+function main() {
+    console.log("\n🚀 === MENJALANKAN PROGRAM UTAMA ===\n");
+    
+    try {
+        // A. Buatlah dua variable dengan tipe PusatDataSingleton bernama data1 dan data2
+        console.log("📋 A. Membuat variable data1 dan data2...");
+        
+        // B. Isi kedua variable tersebut dengan hasil keluaran dari GetDataSingleton()
+        console.log("\n📋 B. Mengisi data1 dan data2 dengan GetDataSingleton()...");
+        const data1 = PusatDataSingleton.GetDataSingleton();
+        const data2 = PusatDataSingleton.GetDataSingleton();
+        
+        // Verifikasi bahwa data1 dan data2 adalah instance yang sama
+        console.log(`🔍 Verifikasi: data1 === data2? ${data1 === data2 ? '✅ YA (Same Instance)' : '❌ TIDAK'}`);
+        
+        // C. Pada data1 lakukan pemanggilan method AddSebuahData() beberapa kali 
+        // dengan input nama anggota kelompok dan asisten praktikum
+        console.log("\n📋 C. Menambahkan nama anggota kelompok dan asisten praktikum melalui data1...");
+        data1.AddSebuahData("Afif Ramadhani - Anggota Kelompok 1");
+        data1.AddSebuahData("Rosyid Mukti Wibowo - Anggota Kelompok 2");
+        data1.AddSebuahData("Adhitya Sofwan Al Rasyid - Anggota Kelompok 3");
+        data1.AddSebuahData("Kholil Abdi Prasetyo - Asisten Praktikum");
+        
+        // D. Pada data2 panggil method PrintSemuaData(), pastikan keluaran menampilkan nama-nama
+        console.log("📋 D. Menampilkan semua data melalui data2...");
+        data2.PrintSemuaData();
+        
+        // E. Pada data2 panggil HapusSebuahData() untuk menghapus nama asisten praktikum
+        console.log("📋 E. Menghapus nama asisten praktikum melalui data2...");
+        data2.HapusSebuahData(3); // Index 3 untuk "Pak Joko Sutrisno - Asisten Praktikum"
+        
+        // F. Pada data1 panggil PrintSemuaData(), nama asisten praktikum tidak muncul
+        console.log("📋 F. Menampilkan semua data melalui data1 (setelah penghapusan)...");
+        data1.PrintSemuaData();
+        
+        // G. Pada data1 dan data2 panggil GetSemuaData() dan print jumlah Count/elemen
+        console.log("📋 G. Menampilkan jumlah elemen di data1 dan data2...");
+        const listData1 = data1.GetSemuaData();
+        const listData2 = data2.GetSemuaData();
+        
+        console.log(`📊 Jumlah elemen di data1: ${listData1.length}`);
+        console.log(`📊 Jumlah elemen di data2: ${listData2.length}`);
+        console.log(`🔍 Apakah jumlah sama? ${listData1.length === listData2.length ? '✅ YA' : '❌ TIDAK'}`);
+        
+        // Kesimpulan
+        console.log("\n" + "=".repeat(50));
+        console.log("🎉 === KESIMPULAN ===");
+        console.log("✨ Design Pattern Singleton berhasil diimplementasikan!");
+        console.log("🔗 data1 dan data2 merujuk ke instance yang sama");
+        console.log("📝 Perubahan pada satu variable terlihat pada variable lainnya");
+        console.log("💾 Hanya ada satu instance PusatDataSingleton di memory");
+        console.log("=".repeat(50));
+        
+    } catch (error) {
+        console.error(`❌ Terjadi error: ${error.message}`);
+    }
+}
+
+/**
+ * DEMONSTRASI TAMBAHAN - Mencoba membuat instance langsung (akan error)
+ */
+function demonstrasiError() {
+    console.log("\n🧪 === DEMONSTRASI ERROR PREVENTION ===");
+    try {
+        console.log("🔬 Mencoba membuat instance baru secara langsung...");
+        const instanceBaru = new PusatDataSingleton(); // Ini akan throw error
+    } catch (error) {
+        console.log(`✅ Error prevention bekerja: ${error.message}`);
+    }
+}
+
+// Jalankan program utama
+main();
+
+// Jalankan demonstrasi error
+demonstrasiError();
+
+console.log("\n📁 Program selesai dijalankan!");
+console.log("💡 Untuk melihat implementasi lebih detail, buka source code file ini.");
