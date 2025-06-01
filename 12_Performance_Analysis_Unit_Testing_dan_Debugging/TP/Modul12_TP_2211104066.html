@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TP Modul 12 - GUI Sederhana</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            max-width: 500px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 28px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+            font-size: 14px;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .output {
+            margin-top: 25px;
+            padding: 20px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 12px;
+            border-left: 4px solid #667eea;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .output-label {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            text-align: center;
+        }
+
+        .output.positif {
+            background: rgba(76, 175, 80, 0.1);
+            border-left-color: #4CAF50;
+            color: #2E7D32;
+        }
+
+        .output.negatif {
+            background: rgba(244, 67, 54, 0.1);
+            border-left-color: #F44336;
+            color: #C62828;
+        }
+
+        .output.nol {
+            background: rgba(255, 152, 0, 0.1);
+            border-left-color: #FF9800;
+            color: #E65100;
+        }
+
+        .info {
+            background: rgba(33, 150, 243, 0.1);
+            border: 1px solid rgba(33, 150, 243, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 25px;
+            font-size: 14px;
+            color: #1976D2;
+        }
+
+        .performance-monitor {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .performance-monitor h3 {
+            margin-top: 0;
+            color: #333;
+            font-size: 16px;
+        }
+
+        .performance-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .processing {
+            animation: pulse 1s infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Pencari Tanda Bilangan</h1>
+        
+        <div class="info">
+            <strong>Instruksi:</strong> Masukkan angka untuk mengetahui apakah bilangan tersebut positif, negatif, atau nol.
+        </div>
+
+        <div class="form-group">
+            <label for="inputNumber">Masukkan Angka:</label>
+            <input type="number" id="inputNumber" placeholder="Contoh: 5, -3, 0" step="any">
+        </div>
+
+        <button onclick="prosesAngka()" id="processBtn">Cari Tanda Bilangan</button>
+
+        <div class="output" id="outputLabel">
+            <div class="output-label">Hasil akan ditampilkan di sini...</div>
+        </div>
+
+        <div class="performance-monitor">
+            <h3>Monitor Performa</h3>
+            <div class="performance-item">
+                <span>Waktu Pemrosesan:</span>
+                <span id="processingTime">-</span>
+            </div>
+            <div class="performance-item">
+                <span>Total Perhitungan:</span>
+                <span id="totalCalculations">0</span>
+            </div>
+            <div class="performance-item">
+                <span>Memory Usage (estimasi):</span>
+                <span id="memoryUsage">Rendah</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Counter untuk monitoring
+        let totalCalculations = 0;
+        let startTime = Date.now();
+
+        /**
+         * Method utama untuk mencari tanda bilangan
+         * @param {number} a - Input angka yang akan diperiksa
+         * @returns {string} - String yang menunjukkan tanda bilangan
+         */
+        function CariTandaBilangan(a) {
+            // Validasi input
+            if (typeof a !== 'number' || isNaN(a)) {
+                return "Input tidak valid";
+            }
+
+            // Logika utama sesuai spesifikasi
+            if (a < 0) {
+                return "Negatif";
+            } else if (a > 0) {
+                return "Positif";
+            } else {
+                return "Nol";
+            }
+        }
+
+        /**
+         * Function untuk memproses input dari GUI
+         */
+        function prosesAngka() {
+            const startProcessTime = performance.now();
+            
+            // Ambil input dari textbox
+            const inputElement = document.getElementById('inputNumber');
+            const outputElement = document.getElementById('outputLabel');
+            const processBtn = document.getElementById('processBtn');
+            
+            // Validasi input kosong
+            if (inputElement.value === '') {
+                outputElement.innerHTML = '<div class="output-label" style="color: #F44336;">Silakan masukkan angka terlebih dahulu!</div>';
+                outputElement.className = 'output';
+                return;
+            }
+
+            // Tambahkan efek processing
+            processBtn.classList.add('processing');
+            processBtn.textContent = 'Memproses...';
+            
+            // Konversi input ke number
+            const angkaInput = parseFloat(inputElement.value);
+            
+            // Panggil method CariTandaBilangan
+            const hasil = CariTandaBilangan(angkaInput);
+            
+            // Simulasi delay untuk menunjukkan processing (untuk keperluan monitoring)
+            setTimeout(() => {
+                // Update counter
+                totalCalculations++;
+                
+                // Tampilkan hasil di label output
+                outputElement.innerHTML = `
+                    <div class="output-label">
+                        Angka: <strong>${angkaInput}</strong><br>
+                        Hasil: <strong>${hasil}</strong>
+                    </div>
+                `;
+                
+                // Update styling berdasarkan hasil
+                outputElement.className = 'output ' + hasil.toLowerCase();
+                
+                // Reset button
+                processBtn.classList.remove('processing');
+                processBtn.textContent = 'Cari Tanda Bilangan';
+                
+                // Update performance monitoring
+                const endProcessTime = performance.now();
+                const processingTime = (endProcessTime - startProcessTime).toFixed(2);
+                
+                updatePerformanceMonitor(processingTime);
+                
+                // Log untuk debugging (bisa dilihat di browser console)
+                console.log(`Input: ${angkaInput}, Output: ${hasil}, Processing Time: ${processingTime}ms`);
+                
+            }, 100); // Delay 100ms untuk efek visual
+        }
+
+        /**
+         * Function untuk update performance monitor
+         */
+        function updatePerformanceMonitor(processingTime) {
+            document.getElementById('processingTime').textContent = processingTime + ' ms';
+            document.getElementById('totalCalculations').textContent = totalCalculations;
+            
+            // Estimasi memory usage berdasarkan jumlah perhitungan
+            let memoryStatus = 'Rendah';
+            if (totalCalculations > 50) {
+                memoryStatus = 'Sedang';
+            }
+            if (totalCalculations > 100) {
+                memoryStatus = 'Tinggi';
+            }
+            document.getElementById('memoryUsage').textContent = memoryStatus;
+        }
+
+        // Event listener untuk Enter key
+        document.getElementById('inputNumber').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                prosesAngka();
+            }
+        });
+
+        // Event listener untuk real-time validation
+        document.getElementById('inputNumber').addEventListener('input', function() {
+            const outputElement = document.getElementById('outputLabel');
+            if (this.value === '') {
+                outputElement.innerHTML = '<div class="output-label">Hasil akan ditampilkan di sini...</div>';
+                outputElement.className = 'output';
+            }
+        });
+
+        // Initialize performance monitoring
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Aplikasi GUI Pencari Tanda Bilangan telah dimuat');
+            console.log('Siap untuk menerima input...');
+            
+            // Monitor CPU usage simulation (dalam aplikasi nyata, ini akan menggunakan Performance API)
+            setInterval(() => {
+                const currentTime = Date.now();
+                const uptime = Math.floor((currentTime - startTime) / 1000);
+                console.log(`App uptime: ${uptime}s, Total calculations: ${totalCalculations}`);
+            }, 5000);
+        });
+
+        // Unit Testing Functions (untuk keperluan testing)
+        function runUnitTests() {
+            console.log('=== Memulai Unit Testing ===');
+            
+            // Test Case 1: Bilangan Positif
+            const test1 = CariTandaBilangan(5);
+            console.log(`Test 1 - Input: 5, Expected: Positif, Actual: ${test1}, Status: ${test1 === 'Positif' ? 'PASS' : 'FAIL'}`);
+            
+            // Test Case 2: Bilangan Negatif
+            const test2 = CariTandaBilangan(-3);
+            console.log(`Test 2 - Input: -3, Expected: Negatif, Actual: ${test2}, Status: ${test2 === 'Negatif' ? 'PASS' : 'FAIL'}`);
+            
+            // Test Case 3: Bilangan Nol
+            const test3 = CariTandaBilangan(0);
+            console.log(`Test 3 - Input: 0, Expected: Nol, Actual: ${test3}, Status: ${test3 === 'Nol' ? 'PASS' : 'FAIL'}`);
+            
+            // Test Case 4: Bilangan Desimal Positif
+            const test4 = CariTandaBilangan(3.14);
+            console.log(`Test 4 - Input: 3.14, Expected: Positif, Actual: ${test4}, Status: ${test4 === 'Positif' ? 'PASS' : 'FAIL'}`);
+            
+            // Test Case 5: Bilangan Desimal Negatif
+            const test5 = CariTandaBilangan(-2.5);
+            console.log(`Test 5 - Input: -2.5, Expected: Negatif, Actual: ${test5}, Status: ${test5 === 'Negatif' ? 'PASS' : 'FAIL'}`);
+            
+            // Test Case 6: Input Invalid
+            const test6 = CariTandaBilangan(NaN);
+            console.log(`Test 6 - Input: NaN, Expected: Input tidak valid, Actual: ${test6}, Status: ${test6 === 'Input tidak valid' ? 'PASS' : 'FAIL'}`);
+            
+            console.log('=== Unit Testing Selesai ===');
+        }
+
+        // Jalankan unit test saat aplikasi dimuat (dapat dilihat di console)
+        setTimeout(runUnitTests, 1000);
+    </script>
+</body>
+</html>
